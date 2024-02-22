@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 
-import textEndpoint from './routes/text.js';
+import linkEndpoint from './link.js';
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 // /link?prompt=birthday+party+at+10am&date=21+Feb+2024,+9:30pm
-app.get('/link', textEndpoint);
+app.get('/link', linkEndpoint);
 
 app.listen(10000, '0.0.0.0', () => {
   console.log(`Server running http://0.0.0.0:10000`);
