@@ -7,27 +7,6 @@
       <div class="jO7h3c">✨ AI Event</div>
     </div>
   </span>
-  <!-- <div
-    role="button"
-    aria-label="AI Magic"
-    tabindex="1"
-    aria-haspopup="true"
-    aria-disabled="false"
-    id="magic-button"
-    @click="modal = true"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      height="36"
-      viewBox="0 -960 960 960"
-      width="36"
-      fill="#EA4335"
-    >
-      <path
-        d="m422-232 207-248H469l29-227-185 267h139l-30 208ZM320-80l40-280H160l360-520h80l-40 320h240L400-80h-80Zm151-390Z"
-      />
-    </svg>
-  </div> -->
   <div v-if="modal" v-on-click-outside="() => (modal = false)" @keydown.esc="modal = false" class="popup">
     <input type="text" v-model="inputValue" v-focus @keyup.enter="submit" placeholder="Ex: Lunch with Ben at 2pm"
       class="input-field" />
@@ -51,12 +30,12 @@ const vFocus = {
 const submit = async () => {
   const input = prompt("Ex: Lunch with Ben at 2pm");
 
-  const now = dateFormat(new Date(), "d mmm yyyy, h:MMTT");
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   const BASE_URL =
-    "https://calendar-link-server.onrender.com/api/generate-link";
+    "https://magic-cal.onrender.com/link/";
   try {
-    const url = `${BASE_URL}?prompt=${encodeURIComponent(input)}`;
+    const url = `${BASE_URL}?prompt=${encodeURIComponent(input)}&timezone=${encodeURIComponent(timezone)}`;
     console.log(url);
     const response = await fetch(url);
     const data = await response.json();
