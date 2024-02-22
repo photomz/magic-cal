@@ -1,50 +1,36 @@
 <template>
   <span jsslot="" jsname="j7LFlb" tabindex="-1" class="z80M1 QJXRJc"
   jsaction="click:o6ZaF(preventDefault=true); mousedown:lAhnzb; mouseup:Osgxgf; mouseenter:SKyDAe; mouseleave:xq3APb;touchstart:jJiBRc; touchmove:kZeBdd; touchend:VfAz8(preventMouseEvents=true)"
-    aria-label="Describe with AI 🦄" role="menuitem">
+    aria-label="🦄 Magic Event" role="menuitem">
     <div class="aBBjbd MbhUzd" jsname="ksKsZd"></div>
     <div class="uyYuVb oJeWuf" data-key="event" jsaction="JIbuQc:Dc9sZe" @click="submit">
-      <div class="jO7h3c">✨ AI Event</div>
+      <div class="jO7h3c">🦄 AI Event</div>
     </div>
   </span>
-  <div v-if="modal" v-on-click-outside="() => (modal = false)" @keydown.esc="modal = false" class="popup">
-    <input type="text" v-model="inputValue" v-focus @keyup.enter="submit" placeholder="Ex: Lunch with Ben at 2pm"
-      class="input-field" />
-    <button @click="submit">Submit</button>
-  </div>
 </template>
 
 <script setup lang="ts"">
-import { ref } from "vue";
-import dateFormat from "dateformat";
-import { vOnClickOutside } from "@vueuse/components";
-
-const modal = ref(false);
-const inputValue = ref("");
-
-// enables v-focus in templates
-const vFocus = {
-  mounted: (el) => el.focus(),
-};
-
 const submit = async () => {
   const input = prompt("Ex: Lunch with Ben at 2pm");
 
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  if (!input.trim()) {
+    return;
+  }
 
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   const BASE_URL =
-    "https://magic-cal.onrender.com/link/";
+    "https://magic-cal.onrender.com";
+
   try {
-    const url = `${BASE_URL}?prompt=${encodeURIComponent(input)}&timezone=${encodeURIComponent(timezone)}`;
-    console.log(url);
-    const response = await fetch(url);
-    const data = await response.json();
+    const url = `${BASE_URL}/link?prompt=${encodeURIComponent(input)}&timezone=${encodeURIComponent(timezone)}`;
+    const data = await (await fetch(url)).json();
     console.log("Response JSON:", data);
-    window.location.href = data.google_calendar_link;
+
+    // Redirect to cal url with details
+    window.location.assign(data.google_calendar_link);
   } catch (error) {
     console.error("Error submitting input to API:", error);
   }
-  modal.value = false;
 };
 </script>
 
