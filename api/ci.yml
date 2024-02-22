@@ -1,10 +1,10 @@
 prepare:
   steps:
     - name: Install dependencies
-      command: yarn
+      command: pnpm
 test:
   steps: []
 run:
   steps:
     - name: Start server
-      command: yarn start
+      command: pnpm start
