@@ -5,27 +5,23 @@ import rateLimit from 'express-rate-limit';
 import textEndpoint from './routes/text.js';
 
 const app = express();
-const port = 3000;
 
-// Rate limiting setup
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-});
-
-// Apply to all requests
-app.use(limiter);
-
+// Rate limit apply to all requests
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+  })
+);
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send('Welcome to this API!');
+  res.send("I'm a calendar teapot!");
 });
 
-// Text generation endpoint
-// /api/generate-link?prompt=birthday+party+at+10am
-app.get('/api/generate-link', textEndpoint);
+// /link?prompt=birthday+party+at+10am&date=21+Feb+2024,+9:30pm
+app.get('/link', textEndpoint);
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(10000, '0.0.0.0', () => {
+  console.log(`Server running http://0.0.0.0:10000`);
 });
