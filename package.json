@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "parcel watch manifest.json --host localhost --config @parcel/config-webextension",
-    "build": "parcel build manifest.json --config @parcel/config-webextension"
+    "build": "parcel build manifest.json --config @parcel/config-webextension && zip -r dist.zip dist/"
   },
   "dependencies": {
     "@parcel/config-webextension": "^2.11.0",
