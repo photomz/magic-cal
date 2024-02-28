@@ -4,7 +4,7 @@
   "author": "Markus Zhang <markuszhang8@gmail.com>",
   "version": "1.0.0",
   "description": "Make events with AI -- ChatGPT in Google Calendar",
-  "permissions": ["activeTab"],
+  "permissions": [],
   "host_permissions": ["*://calendar.google.com/*"],
   "background": {
     "service_worker": "src/background.js"
